@@ -38,7 +38,7 @@ ROOT_DIR_URL_REGEX = r"(?!//(?!>))/(?P<url>)(?=[ \t\n]*[\"'\)>/])"
 
 # Data URI for images in base64
 # Not the best solution, does not follow RFC
-DATA_URI_REGEX = r"data:image\/(?P<format>[a-zA-Z]+);base64,(?P<content>[\S]+)"
+DATA_URI_REGEX = r"data:image\/(?P<format>[a-zA-Z+]+);base64,(?P<content>[\S]+)"
 
 # Start of a tag using 'src' or 'href'
 TAG_START = r"(?i)\b(?P<tag>src|href|action|url|background)(?P<equals>[\t ]*=[\t ]*)(?P<quote>[\"']?)"
