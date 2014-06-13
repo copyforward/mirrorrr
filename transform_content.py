@@ -36,6 +36,10 @@ SAME_DIR_URL_REGEX = r"(?!(/)|(http(s?)://)|(url\())(?P<url>[^\"'> \t\)]+)"
 # URL matches the root directory.
 ROOT_DIR_URL_REGEX = r"(?!//(?!>))/(?P<url>)(?=[ \t\n]*[\"'\)>/])"
 
+# Data URI for images in base64
+# Not the best solution, does not follow RFC
+DATA_URI_REGEX = r"data:image\/(?P<format>[a-zA-Z]+);base64,(?P<content>[\S]+)"
+
 # Start of a tag using 'src' or 'href'
 TAG_START = r"(?i)\b(?P<tag>src|href|action|url|background)(?P<equals>[\t ]*=[\t ]*)(?P<quote>[\"']?)"
 
@@ -47,6 +51,9 @@ CSS_URL_START = r"(?i)\burl\((?P<quote>[\"']?)"
 
 
 REPLACEMENT_REGEXES = [
+  (TAG_START + DATA_URI_REGEX,
+     "data:image/\g<format>;base64,\g<content>"),
+
   (TAG_START + SAME_DIR_URL_REGEX,
      "\g<tag>\g<equals>\g<quote>%(accessed_dir)s\g<url>"),
 
